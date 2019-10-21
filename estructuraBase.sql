@@ -5,7 +5,7 @@
 /* Project name:                                                          */
 /* Author:                                                                */
 /* Script type:           Database creation script                        */
-/* Created on:            2019-10-20 23:26                                */
+/* Created on:            2019-10-21 14:59                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -179,7 +179,7 @@ CREATE TABLE Aseo (
     id_aseo SERIAL  NOT NULL,
     fecha DATE,
     id_ambiente INTEGER  NOT NULL,
-    CONSTRAINT PK_Aseo PRIMARY KEY (id_aseo, id_ambiente)
+    CONSTRAINT PK_Aseo PRIMARY KEY (id_aseo)
 );
 
 /* ---------------------------------------------------------------------- */
@@ -213,11 +213,11 @@ CREATE TABLE Personal (
     nombre CHARACTER(40),
     apellido_paterno CHARACTER(40),
     apellido_materno CHARACTER(40),
-    fecha_contratacion DATE,
-    turno CHARACTER(40),
     id_tipo_personal INTEGER  NOT NULL,
     id_pais INTEGER  NOT NULL,
     id_hotel INTEGER,
+    turno CHARACTER(40),
+    fecha_contratacion CHARACTER(40),
     CONSTRAINT PK_Personal PRIMARY KEY (id_personal)
 );
 
@@ -240,9 +240,9 @@ CREATE TABLE Cliente (
 
 CREATE TABLE Aseo_Personal (
     id_aseo INTEGER  NOT NULL,
-    id_ambiente INTEGER  NOT NULL,
     id_personal INTEGER  NOT NULL,
-    CONSTRAINT PK_Aseo_Personal PRIMARY KEY (id_aseo, id_ambiente, id_personal)
+    id_aseo_personal SERIAL  NOT NULL,
+    CONSTRAINT PK_Aseo_Personal PRIMARY KEY (id_aseo, id_personal, id_aseo_personal)
 );
 
 /* ---------------------------------------------------------------------- */
@@ -376,9 +376,8 @@ ALTER TABLE Paquete_Turistico_Lugar ADD CONSTRAINT Paquete_Turistico_Paquete_Tur
 ALTER TABLE Aseo ADD CONSTRAINT Ambiente_Aseo 
     FOREIGN KEY (id_ambiente) REFERENCES Ambiente (id_ambiente);
 
-ALTER TABLE Aseo_Personal ADD CONSTRAINT Aseo_Aseo_Personal 
-    FOREIGN KEY (id_aseo, id_ambiente) REFERENCES Aseo (id_aseo,id_ambiente);
-
 ALTER TABLE Aseo_Personal ADD CONSTRAINT Personal_Aseo_Personal 
     FOREIGN KEY (id_personal) REFERENCES Personal (id_personal);
 
+ALTER TABLE Aseo_Personal ADD CONSTRAINT Aseo_Aseo_Personal 
+    FOREIGN KEY (id_aseo) REFERENCES Aseo (id_aseo);
