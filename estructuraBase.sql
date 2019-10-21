@@ -33,7 +33,7 @@ CREATE TABLE Ambiente (
     nombre CHARACTER(40),
     descripcion CHARACTER(100),
     capacidad CHARACTER(40),
-    disponible BOOLEAN,
+    disponible CHARACTER(40),
     id_sucursal INTEGER  NOT NULL,
     CONSTRAINT PK_Ambiente PRIMARY KEY (id_ambiente)
 );

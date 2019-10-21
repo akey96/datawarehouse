@@ -18,7 +18,7 @@ select s.lugar as "lugar de sucursal",a.nombre as "nombre ambiente especial",
 from ambiente as a, sucursal as s,especial as e,tipo_especial as te
 where  s.id_sucursal = a.id_sucursal and
 		a.id_ambiente = e.id_ambiente and
-		e.id_tipo_especial = te.id_tipo_especial;
+		e.id_tipo_especial = te.id_tipo_especial;	
 
 
 
