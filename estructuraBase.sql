@@ -31,7 +31,7 @@ CREATE TABLE Sucursal (
 CREATE TABLE Ambiente (
     id_ambiente SERIAL  NOT NULL,
     nombre CHARACTER(40),
-    descripcion CHARACTER(40),
+    descripcion CHARACTER(100),
     capacidad CHARACTER(40),
     disponible BOOLEAN,
     id_sucursal INTEGER  NOT NULL,
