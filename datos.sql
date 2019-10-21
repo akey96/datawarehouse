@@ -1671,7 +1671,7 @@ insert into Personal (id_personal, nombre, apellido_paterno, apellido_materno, f
 insert into Personal (id_personal, nombre, apellido_paterno, apellido_materno, fecha_contratacion, turno, id_tipo_personal, id_pais, id_hotel) values (218, 'Sammy', 'Lamlin', 'Cranfield', '2011-01-29 06:32:59', '3', 5, 146, 5);
 insert into Personal (id_personal, nombre, apellido_paterno, apellido_materno, fecha_contratacion, turno, id_tipo_personal, id_pais, id_hotel) values (219, 'Shurwood', 'Bellham', 'Korting', '2017-01-06 10:53:21', '3', 6, 24, 2);
 insert into Personal (id_personal, nombre, apellido_paterno, apellido_materno, fecha_contratacion, turno, id_tipo_personal, id_pais, id_hotel) values (220, 'Jan', 'Mushett', 'Burnhams', '2017-12-18 23:13:36', '3', 6, 181, 4);
-insert into Personal (id_personal, nombre, apellido_paterno, apellido_materno, fecha_contratacion, turno, id_tipo_personal, id_pais, id_hotel) values (221, 'Erina', ''verdadero'love', 'Mussolini', '2019-05-22 16:06:39', '3', 2, 75, 1);
+insert into Personal (id_personal, nombre, apellido_paterno, apellido_materno, fecha_contratacion, turno, id_tipo_personal, id_pais, id_hotel) values (221, 'Erina', 'True love', 'Mussolini', '2019-05-22 16:06:39', '3', 2, 75, 1);
 insert into Personal (id_personal, nombre, apellido_paterno, apellido_materno, fecha_contratacion, turno, id_tipo_personal, id_pais, id_hotel) values (222, 'Shanon', 'Champken', 'Yerborn', '2012-10-07 08:38:43', '2', 2, 19, 7);
 insert into Personal (id_personal, nombre, apellido_paterno, apellido_materno, fecha_contratacion, turno, id_tipo_personal, id_pais, id_hotel) values (223, 'Rossy', 'Kayes', 'Delea', '2019-10-15 18:05:32', '1', 5, 163, 2);
 insert into Personal (id_personal, nombre, apellido_paterno, apellido_materno, fecha_contratacion, turno, id_tipo_personal, id_pais, id_hotel) values (224, 'Lotti', 'Fairburn', 'Rhubottom', '2017-01-02 18:15:05', '1', 2, 64, 4);
@@ -7787,3 +7787,4 @@ insert into aseo (fecha, id_ambiente) values ('2016-09-14', 156);
 insert into aseo (fecha, id_ambiente) values ('2018-05-24', 199);
 insert into aseo (fecha, id_ambiente) values ('2019-02-13', 68);
 --aseo hotel 5
+
