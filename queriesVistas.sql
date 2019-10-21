@@ -14,7 +14,7 @@ where  s.id_sucursal = a.id_sucursal and
 		h.id_tipo_habitacion = th.id_tipo_habitacion;
 --habitaciones especiales
 select s.lugar as "lugar de sucursal",a.nombre as "nombre ambiente especial",
-		a.disponible,e.horario_atencion as "numero de habitacion",te.nombre as "tipo de salon"
+		a.disponible,e.horario_atencion as "horario de habitacion",te.nombre as "tipo de salon"
 from ambiente as a, sucursal as s,especial as e,tipo_especial as te
 where  s.id_sucursal = a.id_sucursal and
 		a.id_ambiente = e.id_ambiente and
