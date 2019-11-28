@@ -1,11 +1,19 @@
 --queries para las vistas
 --aseo
-select p.nombre,p.apellido_paterno,p.apellido_materno,p.turno,a.fecha,am.nombre
-from personal as p,aseo_personal as ap,aseo as a,ambiente as am 
-where p.id_personal = ap.id_personal
+select p.nombre, p.apellido_paterno, p.apellido_materno, p.turno,a.fecha, am.nombre
+from personal as p, aseo_personal as ap, aseo as a, ambiente as am
+where  p.id_personal = ap.id_personal
 	and a.id_aseo = ap.id_aseo
 	and a.id_ambiente =  am.id_ambiente;
 
+-- Personal
+
+select p.nombre, p.apellido_paterno, p.apellido_materno, pais.nombre pais_origen, tp.nombre as tipo_personal, p.turno, sucursal.lugar as hotel, p.fecha_contratacion
+from tipo_personal as tp, personal as p, pais,  sucursal
+where 
+	p.id_tipo_personal=tp.id_tipo_personal and
+	p.id_hotel=sucursal.id_sucursal and
+	p.id_pais=pais.id_pais;
 
 --habitaciones
 

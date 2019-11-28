@@ -97,8 +97,8 @@ CREATE TABLE Descuento (
 
 CREATE TABLE Paquete_Turistico (
     id_paquete_turistico SERIAL  NOT NULL,
-    nombre CHARACTER(40),
-    descripcion CHARACTER(40),
+    nombre CHARACTER(400),
+    descripcion CHARACTER(1000),
     id_descuento INTEGER  NOT NULL,
     CONSTRAINT PK_Paquete_Turistico PRIMARY KEY (id_paquete_turistico)
 );
@@ -156,8 +156,8 @@ CREATE TABLE Credito (
 
 CREATE TABLE Lugar (
     id_lugar SERIAL  NOT NULL,
-    nombre CHARACTER(40),
-    descripcion CHARACTER(40),
+    nombre CHARACTER(500),
+    descripcion CHARACTER(500),
     CONSTRAINT PK_Lugar PRIMARY KEY (id_lugar)
 );
 
