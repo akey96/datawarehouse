@@ -5,7 +5,7 @@
 /* Project name:                                                          */
 /* Author:                                                                */
 /* Script type:           Database creation script                        */
-/* Created on:            2019-10-21 14:59                                */
+/* Created on:            2019-12-05 04:45                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -19,8 +19,8 @@
 
 CREATE TABLE Sucursal (
     id_sucursal SERIAL  NOT NULL,
-    lugar CHARACTER(40),
-    direccion CHARACTER(40),
+    lugar CHARACTER(1000),
+    direccion CHARACTER(1000),
     CONSTRAINT PK_Sucursal PRIMARY KEY (id_sucursal)
 );
 
@@ -30,10 +30,10 @@ CREATE TABLE Sucursal (
 
 CREATE TABLE Ambiente (
     id_ambiente SERIAL  NOT NULL,
-    nombre CHARACTER(40),
-    descripcion CHARACTER(100),
-    capacidad CHARACTER(40),
-    disponible CHARACTER(40),
+    nombre CHARACTER(1000),
+    descripcion CHARACTER(1000),
+    capacidad CHARACTER(1000),
+    disponible CHARACTER(1000),
     id_sucursal INTEGER  NOT NULL,
     CONSTRAINT PK_Ambiente PRIMARY KEY (id_ambiente)
 );
@@ -44,7 +44,7 @@ CREATE TABLE Ambiente (
 
 CREATE TABLE Tipo_habitacion (
     id_tipo_habitacion SERIAL  NOT NULL,
-    nombre CHARACTER(40),
+    nombre CHARACTER(1000),
     CONSTRAINT PK_Tipo_habitacion PRIMARY KEY (id_tipo_habitacion)
 );
 
@@ -54,7 +54,7 @@ CREATE TABLE Tipo_habitacion (
 
 CREATE TABLE Articulo (
     id_articulo SERIAL  NOT NULL,
-    nombre CHARACTER(40),
+    nombre CHARACTER(1000),
     id_ambiente INTEGER  NOT NULL,
     CONSTRAINT PK_Articulo PRIMARY KEY (id_articulo)
 );
@@ -65,7 +65,7 @@ CREATE TABLE Articulo (
 
 CREATE TABLE Mueble (
     id_mueble SERIAL  NOT NULL,
-    nombre CHARACTER(40),
+    nombre CHARACTER(1000),
     id_ambiente INTEGER  NOT NULL,
     CONSTRAINT PK_Mueble PRIMARY KEY (id_mueble)
 );
@@ -76,7 +76,7 @@ CREATE TABLE Mueble (
 
 CREATE TABLE Tipo_Personal (
     id_tipo_personal SERIAL  NOT NULL,
-    nombre CHARACTER(40),
+    nombre CHARACTER(1000),
     CONSTRAINT PK_Tipo_Personal PRIMARY KEY (id_tipo_personal)
 );
 
@@ -87,7 +87,7 @@ CREATE TABLE Tipo_Personal (
 CREATE TABLE Descuento (
     id_descuento SERIAL  NOT NULL,
     porcentaje INTEGER,
-    temporada CHARACTER(40),
+    temporada CHARACTER(1000),
     CONSTRAINT PK_Descuento PRIMARY KEY (id_descuento)
 );
 
@@ -97,8 +97,8 @@ CREATE TABLE Descuento (
 
 CREATE TABLE Paquete_Turistico (
     id_paquete_turistico SERIAL  NOT NULL,
-    nombre CHARACTER(400),
-    descripcion CHARACTER(1000),
+    nombre CHARACTER(1000),
+    descripcion CHARACTER(10000),
     id_descuento INTEGER  NOT NULL,
     CONSTRAINT PK_Paquete_Turistico PRIMARY KEY (id_paquete_turistico)
 );
@@ -109,7 +109,7 @@ CREATE TABLE Paquete_Turistico (
 
 CREATE TABLE Pais (
     id_pais SERIAL  NOT NULL,
-    nombre CHARACTER(40),
+    nombre CHARACTER(1000),
     CONSTRAINT PK_Pais PRIMARY KEY (id_pais)
 );
 
@@ -119,7 +119,7 @@ CREATE TABLE Pais (
 
 CREATE TABLE Tipo_Especial (
     id_tipo_especial SERIAL  NOT NULL,
-    nombre CHARACTER(40),
+    nombre CHARACTER(1000),
     CONSTRAINT PK_Tipo_Especial PRIMARY KEY (id_tipo_especial)
 );
 
@@ -155,8 +155,8 @@ CREATE TABLE Credito (
 
 CREATE TABLE Lugar (
     id_lugar SERIAL  NOT NULL,
-    nombre CHARACTER(500),
-    descripcion CHARACTER(500),
+    nombre CHARACTER(1000),
+    descripcion CHARACTER(1000),
     CONSTRAINT PK_Lugar PRIMARY KEY (id_lugar)
 );
 
@@ -186,7 +186,7 @@ CREATE TABLE Aseo (
 /* ---------------------------------------------------------------------- */
 
 CREATE TABLE Especial (
-    horario_atencion CHARACTER(40),
+    horario_atencion CHARACTER(1000),
     id_ambiente INTEGER  NOT NULL,
     id_tipo_especial INTEGER  NOT NULL,
     CONSTRAINT PK_Especial PRIMARY KEY (id_ambiente)
@@ -209,14 +209,14 @@ CREATE TABLE Habitacion (
 
 CREATE TABLE Personal (
     id_personal SERIAL  NOT NULL,
-    nombre CHARACTER(40),
-    apellido_paterno CHARACTER(40),
-    apellido_materno CHARACTER(40),
+    nombre CHARACTER(1000),
+    apellido_paterno CHARACTER(1000),
+    apellido_materno CHARACTER(1000),
     id_tipo_personal INTEGER  NOT NULL,
     id_pais INTEGER  NOT NULL,
     id_hotel INTEGER,
-    turno CHARACTER(40),
-    fecha_contratacion CHARACTER(40),
+    turno CHARACTER(1000),
+    fecha_contratacion CHARACTER(1000),
     CONSTRAINT PK_Personal PRIMARY KEY (id_personal)
 );
 
@@ -226,9 +226,9 @@ CREATE TABLE Personal (
 
 CREATE TABLE Cliente (
     id_cliente SERIAL  NOT NULL,
-    nombre CHARACTER(40),
-    apellido_paterno CHARACTER(40),
-    apellido_materno CHARACTER(40),
+    nombre CHARACTER(1000),
+    apellido_paterno CHARACTER(1000),
+    apellido_materno CHARACTER(1000),
     id_pais INTEGER  NOT NULL,
     CONSTRAINT PK_Cliente PRIMARY KEY (id_cliente)
 );
@@ -245,30 +245,16 @@ CREATE TABLE Aseo_Personal (
 );
 
 /* ---------------------------------------------------------------------- */
-/* Add table "Reserva"                                                    */
+/* Add table "Reserva"                                                   */
 /* ---------------------------------------------------------------------- */
 
 CREATE TABLE Reserva (
     id_reserva SERIAL  NOT NULL,
     fecha DATE,
-    id_cliente INTEGER  NOT NULL,
-    id_personal INTEGER  NOT NULL,
+    id_personal INTEGER,
+    id_cliente INTEGER,
     id_ambiente INTEGER,
-    CONSTRAINT PK_Reserva PRIMARY KEY (id_reserva, id_cliente, id_personal)
-);
-
-/* ---------------------------------------------------------------------- */
-/* Add table "Pago"                                                       */
-/* ---------------------------------------------------------------------- */
-
-CREATE TABLE Pago (
-    id_pago CHARACTER(40)  NOT NULL,
-    fecha DATE,
-    monto INTEGER,
-    id_reserva INTEGER  NOT NULL,
-    id_cliente INTEGER  NOT NULL,
-    id_personal INTEGER  NOT NULL,
-    CONSTRAINT PK_Pago PRIMARY KEY (id_pago, id_reserva, id_cliente, id_personal)
+    CONSTRAINT PK_Reserva PRIMARY KEY (id_reserva)
 );
 
 /* ---------------------------------------------------------------------- */
@@ -278,22 +264,22 @@ CREATE TABLE Pago (
 CREATE TABLE Hospedaje (
     id_hospedaje SERIAL  NOT NULL,
     fecha_inicio DATE,
-    fecha_fin CHARACTER(40),
+    fecha_fin CHARACTER(1000),
     id_paquete_turistico INTEGER  NOT NULL,
-    id_reserva INTEGER  NOT NULL,
-    id_cliente INTEGER  NOT NULL,
-    id_personal INTEGER  NOT NULL,
+    id_reserva INTEGER,
     CONSTRAINT PK_Hospedaje PRIMARY KEY (id_hospedaje)
 );
 
 /* ---------------------------------------------------------------------- */
-/* Add table "Hospedaje_Cliente"                                          */
+/* Add table "Pago"                                                       */
 /* ---------------------------------------------------------------------- */
 
-CREATE TABLE Hospedaje_Cliente (
-    id_hospedaje INTEGER  NOT NULL,
-    id_cliente INTEGER  NOT NULL,
-    PRIMARY KEY (id_hospedaje, id_cliente)
+CREATE TABLE Pago (
+    id_pago serial not null,
+    fecha DATE,
+    monto INTEGER,
+    id_reserva INTEGER  NOT NULL,
+    CONSTRAINT PK_Pago PRIMARY KEY (id_pago, id_reserva)
 );
 
 /* ---------------------------------------------------------------------- */
@@ -334,31 +320,16 @@ ALTER TABLE Hospedaje ADD CONSTRAINT Paquete_Turistico_Hospedaje
     FOREIGN KEY (id_paquete_turistico) REFERENCES Paquete_Turistico (id_paquete_turistico);
 
 ALTER TABLE Hospedaje ADD CONSTRAINT Reserva_Hospedaje 
-    FOREIGN KEY (id_reserva, id_cliente, id_personal) REFERENCES Reserva (id_reserva,id_cliente,id_personal);
-
-ALTER TABLE Reserva ADD CONSTRAINT Cliente_Reserva 
-    FOREIGN KEY (id_cliente) REFERENCES Cliente (id_cliente);
-
-ALTER TABLE Reserva ADD CONSTRAINT Personal_Reserva 
-    FOREIGN KEY (id_personal) REFERENCES Personal (id_personal);
-
-ALTER TABLE Reserva ADD CONSTRAINT Ambiente_Reserva 
-    FOREIGN KEY (id_ambiente) REFERENCES Ambiente (id_ambiente);
+    FOREIGN KEY (id_reserva) REFERENCES Reserva (id_reserva);
 
 ALTER TABLE Cliente ADD CONSTRAINT Pais_Cliente 
     FOREIGN KEY (id_pais) REFERENCES Pais (id_pais);
 
 ALTER TABLE Pago ADD CONSTRAINT Reserva_Pago 
-    FOREIGN KEY (id_reserva, id_cliente, id_personal) REFERENCES Reserva (id_reserva,id_cliente,id_personal);
+    FOREIGN KEY (id_reserva) REFERENCES Reserva (id_reserva);
 
 ALTER TABLE Paquete_Turistico ADD CONSTRAINT Descuento_Paquete_Turistico 
     FOREIGN KEY (id_descuento) REFERENCES Descuento (id_descuento);
-
-ALTER TABLE Hospedaje_Cliente ADD CONSTRAINT Hospedaje_Hospedaje_Cliente 
-    FOREIGN KEY (id_hospedaje) REFERENCES Hospedaje (id_hospedaje);
-
-ALTER TABLE Hospedaje_Cliente ADD CONSTRAINT Cliente_Hospedaje_Cliente 
-    FOREIGN KEY (id_cliente) REFERENCES Cliente (id_cliente);
 
 ALTER TABLE Deuda ADD CONSTRAINT Sucursal_Deuda 
     FOREIGN KEY (id_sucursal) REFERENCES Sucursal (id_sucursal);
@@ -380,3 +351,13 @@ ALTER TABLE Aseo_Personal ADD CONSTRAINT Personal_Aseo_Personal
 
 ALTER TABLE Aseo_Personal ADD CONSTRAINT Aseo_Aseo_Personal 
     FOREIGN KEY (id_aseo) REFERENCES Aseo (id_aseo);
+
+ALTER TABLE Reserva ADD CONSTRAINT Personal_Reserva 
+    FOREIGN KEY (id_personal) REFERENCES Personal (id_personal);
+
+ALTER TABLE Reserva ADD CONSTRAINT Cliente_Reserva 
+    FOREIGN KEY (id_cliente) REFERENCES Cliente (id_cliente);
+
+ALTER TABLE Reserva ADD CONSTRAINT Ambiente_Reserva 
+    FOREIGN KEY (id_ambiente) REFERENCES Ambiente (id_ambiente);
+
