@@ -143,7 +143,6 @@ CREATE TABLE Deuda (
 CREATE TABLE Credito (
     id_credito SERIAL  NOT NULL,
     monto INTEGER,
-    date CHARACTER(40),
     fecha DATE,
     activo BOOLEAN,
     id_sucursal INTEGER  NOT NULL,
