@@ -15951,27 +15951,26 @@ insert into Descuento (id_descuento, porcentaje, temporada) values (14, 4, 'Novi
 insert into Descuento (id_descuento, porcentaje, temporada) values (15, 10, 'Diciembre');
 
 -- Paquete Turistico
-
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (1, 'Aleksandr', 'Hampson', 14);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (2, 'Bartholomeus', 'Cathersides', 7);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (3, 'Kerrie', 'Maytom', 11);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (4, 'Miles', 'Parsons', 5);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (5, 'Charis', 'Paoloni', 11);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (6, 'Eleanore', 'Labitt', 15);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (7, 'Christophe', 'Carcas', 10);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (8, 'Xena', 'Buttress', 5);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (9, 'Charis', 'Hidderley', 14);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (10, 'Amalee', 'Rouzet', 3);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (11, 'Milka', 'Brookwood', 4);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (12, 'Giuditta', 'Coxhead', 6);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (13, 'Scot', 'Demschke', 2);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (14, 'Eliza', 'Writer', 1);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (15, 'Clarice', 'Griffin', 5);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (16, 'Monika', 'Darque', 9);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (17, 'Robin', 'Bittlestone', 8);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (18, 'Shanna', 'Braz', 13);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (19, 'Bone', 'Cockling', 1);
-insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (20, 'Corene', 'Cashmore', 14);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (1, 'Paquete bronce', 'Incluye pasajes, habitación simple, visitas no guiadas a los lugares y almuerzo cada día',1);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (2, 'Paquete plata', 'Incluye pasajes, habitación doble con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo y cena todos los días',1);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (3, 'Paquete Premium', 'Incluye pasajes, habitación suit con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo buffet,cena y merienda sin limites todos los días',1);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (4, 'Paquete plata', 'Incluye pasajes, habitación doble con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo y cena todos los días',2);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (5, 'Paquete Premium', 'Incluye pasajes, habitación suit con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo buffet,cena y merienda sin limites todos los días',2);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (6, 'Paquete bronce', 'Incluye pasajes, habitación simple, visitas no guiadas a los lugares y almuerzo cada día',2);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (7, 'Paquete plata', 'Incluye pasajes, habitación doble con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo y cena todos los días',13);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (8, 'Paquete plata', 'Incluye pasajes, habitación doble con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo y cena todos los días',3);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (9,'Paquete Premium', 'Incluye pasajes, habitación suit con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo buffet,cena y merienda sin limites todos los días',3);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (10, 'Paquete bronce', 'Incluye pasajes, habitación simple, visitas no guiadas a los lugares y almuerzo cada día',3);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (11,'Paquete Premium', 'Incluye pasajes, habitación suit con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo buffet,cena y merienda sin limites todos los días',4);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (12, 'Paquete bronce', 'Incluye pasajes, habitación simple, visitas no guiadas a los lugares y almuerzo cada día',4);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (13, 'Paquete plata', 'Incluye pasajes, habitación doble con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo y cena todos los días',7);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (14,'Paquete Premium', 'Incluye pasajes, habitación suit con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo buffet,cena y merienda sin limites todos los días',5);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (15, 'Paquete Premium', 'Incluye pasajes, habitación suit con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo buffet,cena y merienda sin limites todos los días',6);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (16, 'Paquete plata', 'Incluye pasajes, habitación doble con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo y cena todos los días',4);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (17, 'Paquete Premium', 'Incluye pasajes, habitación suit con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo buffet,cena y merienda sin limites todos los días',7);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (18, 'Paquete plata', 'Incluye pasajes, habitación doble con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo y cena todos los días',5);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (19, 'Paquete plata', 'Incluye pasajes, habitación doble con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo y cena todos los días',14);
+insert into Paquete_Turistico (id_paquete_turistico, nombre, descripcion, id_descuento) values (20, 'Paquete Premium', 'Incluye pasajes, habitación suit con derecho a lugares especiales, visitas guiadas a los lugares, almuerzo buffet,cena y merienda sin limites todos los días',9);
 
 -- Paquete Turistico Lugar
 

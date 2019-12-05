@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>1_habitaciones</name>
+    <name>6_aseo</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -427,10 +427,10 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/11/25 17:51:55.454</created_date>
+    <created_date>2019/12/05 12:34:30.719</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/11/25 17:51:55.454</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2019/12/05 12:34:30.719</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -486,111 +486,56 @@
       </attribute>
     </attributes>
   </connection>
-  <connection>
-    <name>data_output_DB</name>
-    <server>localhost</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>dataoutput</database>
-    <port>5432</port>
-    <username>postgres</username>
-    <password>Encrypted 2be98afc86aa78281bb10ba7f8fc0fc8e</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>5432</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
   <order>
     <hop>
-      <from>Entrada TOTAL ARTICULOS</from>
-      <to>Multiway merge join</to>
+      <from>Entrada Aseo</from>
+      <to>cambio de turno</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>entrada HABITACIONES</from>
-      <to>Multiway merge join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Entrada TOTAL MUEBLES</from>
-      <to>Multiway merge join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Multiway merge join</from>
-      <to>Conversion de estado</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Conversion de estado</from>
-      <to>Total de ACTIVOS</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Total de ACTIVOS</from>
-      <to>Dimencion TIPO HABITACION</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Seleccion de campos</from>
-      <to>Hechos HABITACION</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dimencion TIPO HABITACION</from>
-      <to>Dimencion HOTEL</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dimencion HOTEL</from>
-      <to>Dimencion Estado</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dimencion Estado</from>
-      <to>Seleccion de campos</to>
+      <from>cambio de turno</from>
+      <to>odenar por hotel</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Conversion de estado</name>
+    <name>Entrada Aseo</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>data_input_DB</connection>
+    <sql>select p.nombre, p.apellido_paterno, p.apellido_materno, p.turno,a.fecha, am.nombre
+from personal as p, aseo_personal as ap, aseo as a, ambiente as am
+where  p.id_personal = ap.id_personal
+	and a.id_aseo = ap.id_aseo
+	and a.id_ambiente =  am.id_ambiente;</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>112</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>cambio de turno</name>
     <type>ReplaceString</type>
     <description/>
     <distribute>Y</distribute>
@@ -602,11 +547,11 @@
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>turno</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
-        <replace_string>verdadero</replace_string>
-        <replace_by_string>Disponible</replace_by_string>
+        <replace_string>1</replace_string>
+        <replace_by_string>Mañana</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
@@ -614,11 +559,23 @@
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>turno</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
-        <replace_string>falso</replace_string>
-        <replace_by_string>No disponible</replace_by_string>
+        <replace_string>2</replace_string>
+        <replace_by_string>Tarde</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>turno</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>3</replace_string>
+        <replace_by_string>Noche</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
@@ -635,14 +592,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
-      <yloc>208</yloc>
+      <xloc>304</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Dimencion Estado</name>
-    <type>CombinationLookup</type>
+    <name>odenar por hotel</name>
+    <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -651,272 +608,21 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <schema/>
-    <table>dim_estado</table>
-    <connection>data_output_DB</connection>
-    <commit>100</commit>
-    <cache_size>9999</cache_size>
-    <replace>N</replace>
-    <preloadCache>N</preloadCache>
-    <crc>N</crc>
-    <crcfield>hashcode</crcfield>
-    <fields>
-      <key>
-        <name>estado</name>
-        <lookup>estado</lookup>
-      </key>
-      <return>
-        <name>id_dim_estado</name>
-        <creation_method>tablemax</creation_method>
-        <use_autoinc>N</use_autoinc>
-      </return>
-    </fields>
-    <sequence/>
-    <last_update_field/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>624</xloc>
-      <yloc>368</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Dimencion HOTEL</name>
-    <type>CombinationLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <schema/>
-    <table>dim_hotel</table>
-    <connection>data_output_DB</connection>
-    <commit>100</commit>
-    <cache_size>9999</cache_size>
-    <replace>N</replace>
-    <preloadCache>N</preloadCache>
-    <crc>N</crc>
-    <crcfield>hashcode</crcfield>
-    <fields>
-      <key>
-        <name>lugar_sucursal</name>
-        <lookup>lugar_sucursal</lookup>
-      </key>
-      <return>
-        <name>id_dim_hotel</name>
-        <creation_method>tablemax</creation_method>
-        <use_autoinc>N</use_autoinc>
-      </return>
-    </fields>
-    <sequence/>
-    <last_update_field/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>816</xloc>
-      <yloc>368</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Dimencion TIPO HABITACION</name>
-    <type>CombinationLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <schema/>
-    <table>dim-tipo-habitacion</table>
-    <connection>data_output_DB</connection>
-    <commit>100</commit>
-    <cache_size>9999</cache_size>
-    <replace>N</replace>
-    <preloadCache>N</preloadCache>
-    <crc>N</crc>
-    <crcfield>hashcode</crcfield>
-    <fields>
-      <key>
-        <name>tipo habitacion</name>
-        <lookup>tipo habitacion</lookup>
-      </key>
-      <return>
-        <name>id_dim_tipo_habitacion</name>
-        <creation_method>tablemax</creation_method>
-        <use_autoinc>N</use_autoinc>
-      </return>
-    </fields>
-    <sequence/>
-    <last_update_field/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>816</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Entrada TOTAL ARTICULOS</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>data_input_DB</connection>
-    <sql>SELECT a.id_ambiente, count(*) as total_articulos
-	FROM ambiente as a, articulo as ar
-	WHERE a.id_ambiente=ar.id_ambiente
-	group by a.id_ambiente
-	order by a.id_ambiente ASC;
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>96</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Entrada TOTAL MUEBLES</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>data_input_DB</connection>
-    <sql>
--- muebles
-SELECT a.id_ambiente, count(*) as total_muebles
-	FROM ambiente as a, mueble as mu
-	WHERE a.id_ambiente=mu.id_ambiente
-	group by a.id_ambiente
-	order by a.id_ambiente ASC;
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>96</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Hechos HABITACION</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>data_output_DB</connection>
-    <schema/>
-    <table>hecho-habitacion</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <column_name>id_ambiente</column_name>
-        <stream_name>id_ambiente</stream_name>
-      </field>
-      <field>
-        <column_name>total_articulos</column_name>
-        <stream_name>total_articulos</stream_name>
-      </field>
-      <field>
-        <column_name>total_muebles</column_name>
-        <stream_name>total_muebles</stream_name>
-      </field>
-      <field>
-        <column_name>id_dim_hotel</column_name>
-        <stream_name>id_dim_hotel</stream_name>
-      </field>
-      <field>
-        <column_name>id_dim_estado</column_name>
-        <stream_name>id_dim_estado</stream_name>
-      </field>
-      <field>
-        <column_name>numero de habitacion</column_name>
-        <stream_name>numero de habitacion</stream_name>
-      </field>
-      <field>
-        <column_name>id_dim_tipo_habitacion</column_name>
-        <stream_name>id_dim_tipo_habitacion</stream_name>
-      </field>
-      <field>
-        <column_name>total_activos</column_name>
-        <stream_name>total_activos</stream_name>
+        <name>hotel</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
       </field>
     </fields>
     <attributes/>
@@ -928,178 +634,8 @@ SELECT a.id_ambiente, count(*) as total_muebles
       </output>
     </remotesteps>
     <GUI>
-      <xloc>208</xloc>
-      <yloc>368</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Multiway merge join</name>
-    <type>MultiwayMergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>INNER</join_type>
-    <step0>Entrada Total Articulos</step0>
-    <step1>Entrada Total Muebles</step1>
-    <step2>entrada HABITACIONES</step2>
-    <number_input>3</number_input>
-    <keys>
-      <key>id_ambiente</key>
-      <key>id_ambiente</key>
-      <key>id_ambiente</key>
-    </keys>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>368</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Seleccion de campos</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_ambiente</name>
-      </field>
-      <field>
-        <name>total_articulos</name>
-      </field>
-      <field>
-        <name>total_muebles</name>
-      </field>
-      <field>
-        <name>id_dim_hotel</name>
-      </field>
-      <field>
-        <name>id_dim_estado</name>
-      </field>
-      <field>
-        <name>numero de habitacion</name>
-      </field>
-      <field>
-        <name>id_dim_tipo_habitacion</name>
-      </field>
-      <field>
-        <name>total_activos</name>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>416</xloc>
-      <yloc>368</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Total de ACTIVOS</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>//Script here
-
-var total_activos = parseInt(total_muebles + total_articulos);</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>total_activos</name>
-        <rename>total_activos</rename>
-        <type>Number</type>
-        <length>16</length>
-        <precision>2</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>656</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>entrada HABITACIONES</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>data_input_DB</connection>
-    <sql>select a.id_ambiente, s.lugar as lugar_sucursal,a.nombre as "nombre habitacion",
-		a.disponible as estado,h.numero as "numero de habitacion",th.nombre as "tipo habitacion"
-from ambiente as a, sucursal as s,habitacion as h,tipo_habitacion as th
-where  s.id_sucursal = a.id_sucursal and
-		a.id_ambiente = h.id_ambiente and
-		h.id_tipo_habitacion = th.id_tipo_habitacion;</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>96</xloc>
-      <yloc>288</yloc>
+      <xloc>434</xloc>
+      <yloc>116</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

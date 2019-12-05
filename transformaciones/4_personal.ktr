@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>1_habitaciones</name>
+    <name>personal</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -427,9 +427,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/11/25 17:51:55.454</created_date>
+    <created_date>2019/12/05 09:35:11.748</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/11/25 17:51:55.454</modified_date>
+    <modified_date>2019/12/05 09:35:11.748</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -537,61 +537,132 @@
       </attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>DATAUOTPUT connection</name>
+    <server>localhost</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>dataoutput</database>
+    <port>5432</port>
+    <username>postgres</username>
+    <password>Encrypted 2be98afc86aa78281bb10ba7f8fc0fc8e</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>5432</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
-      <from>Entrada TOTAL ARTICULOS</from>
-      <to>Multiway merge join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>entrada HABITACIONES</from>
-      <to>Multiway merge join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Entrada TOTAL MUEBLES</from>
-      <to>Multiway merge join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Multiway merge join</from>
-      <to>Conversion de estado</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Conversion de estado</from>
-      <to>Total de ACTIVOS</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Total de ACTIVOS</from>
-      <to>Dimencion TIPO HABITACION</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Seleccion de campos</from>
-      <to>Hechos HABITACION</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dimencion TIPO HABITACION</from>
-      <to>Dimencion HOTEL</to>
+      <from>Añadir secuencia</from>
+      <to>Eliminar y ordenar campos</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Dimencion HOTEL</from>
-      <to>Dimencion Estado</to>
+      <to>Dimencion PAIS DE ORIGEN</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Dimencion Estado</from>
-      <to>Seleccion de campos</to>
+      <from>Dimencion TIPO PERSONAL</from>
+      <to>Dimencion HOTEL</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dimencion TURNO</from>
+      <to>Dimencion TIPO PERSONAL</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Eliminar y ordenar campos</from>
+      <to>Dimencion TURNO</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Entrada PERSONAL</from>
+      <to>cambio de turno</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Selecciona/Renombra valores</from>
+      <to>Tabla Hechos personal</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>cambio de turno</from>
+      <to>formato fecha</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>formato fecha</from>
+      <to>odenar por hotel</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>limpiar espacios de  nombre completo</from>
+      <to>Añadir secuencia</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>nombre completo</from>
+      <to>limpiar espacios de  nombre completo</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>odenar por hotel</from>
+      <to>nombre completo</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dimencion PAIS DE ORIGEN</from>
+      <to>DImencion Personal</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>DImencion Personal</from>
+      <to>Selecciona/Renombra valores</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Conversion de estado</name>
-    <type>ReplaceString</type>
+    <name>Añadir secuencia</name>
+    <type>Sequence</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -600,79 +671,16 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>estado</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>verdadero</replace_string>
-        <replace_by_string>Disponible</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-        <is_unicode>no</is_unicode>
-      </field>
-      <field>
-        <in_stream_name>estado</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>falso</replace_string>
-        <replace_by_string>No disponible</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-        <is_unicode>no</is_unicode>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>512</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Dimencion Estado</name>
-    <type>CombinationLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
+    <valuename>id_personal</valuename>
+    <use_database>N</use_database>
+    <connection/>
     <schema/>
-    <table>dim_estado</table>
-    <connection>data_output_DB</connection>
-    <commit>100</commit>
-    <cache_size>9999</cache_size>
-    <replace>N</replace>
-    <preloadCache>N</preloadCache>
-    <crc>N</crc>
-    <crcfield>hashcode</crcfield>
-    <fields>
-      <key>
-        <name>estado</name>
-        <lookup>estado</lookup>
-      </key>
-      <return>
-        <name>id_dim_estado</name>
-        <creation_method>tablemax</creation_method>
-        <use_autoinc>N</use_autoinc>
-      </return>
-    </fields>
-    <sequence/>
-    <last_update_field/>
+    <seqname>SEQ_</seqname>
+    <use_counter>Y</use_counter>
+    <counter_name/>
+    <start_at>1</start_at>
+    <increment_by>1</increment_by>
+    <max_value>999999999</max_value>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -682,8 +690,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>624</xloc>
-      <yloc>368</yloc>
+      <xloc>896</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -729,13 +737,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>816</xloc>
-      <yloc>368</yloc>
+      <xloc>336</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Dimencion TIPO HABITACION</name>
+    <name>Dimencion PAIS DE ORIGEN</name>
     <type>CombinationLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -746,8 +754,8 @@
       <schema_name/>
     </partitioning>
     <schema/>
-    <table>dim-tipo-habitacion</table>
-    <connection>data_output_DB</connection>
+    <table>dim_pais</table>
+    <connection>DATAUOTPUT connection</connection>
     <commit>100</commit>
     <cache_size>9999</cache_size>
     <replace>N</replace>
@@ -756,11 +764,11 @@
     <crcfield>hashcode</crcfield>
     <fields>
       <key>
-        <name>tipo habitacion</name>
-        <lookup>tipo habitacion</lookup>
+        <name>pais_origen</name>
+        <lookup>pais_origen</lookup>
       </key>
       <return>
-        <name>id_dim_tipo_habitacion</name>
+        <name>id_dim_pais</name>
         <creation_method>tablemax</creation_method>
         <use_autoinc>N</use_autoinc>
       </return>
@@ -776,13 +784,157 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>816</xloc>
+      <xloc>176</xloc>
       <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Entrada TOTAL ARTICULOS</name>
+    <name>Dimencion TIPO PERSONAL</name>
+    <type>CombinationLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <schema/>
+    <table>dim_tipo_personal</table>
+    <connection>data_output_DB</connection>
+    <commit>100</commit>
+    <cache_size>9999</cache_size>
+    <replace>N</replace>
+    <preloadCache>N</preloadCache>
+    <crc>N</crc>
+    <crcfield>hashcode</crcfield>
+    <fields>
+      <key>
+        <name>tipo_personal</name>
+        <lookup>tipo_personal</lookup>
+      </key>
+      <return>
+        <name>id_dim_tipo_personal</name>
+        <creation_method>tablemax</creation_method>
+        <use_autoinc>N</use_autoinc>
+      </return>
+    </fields>
+    <sequence/>
+    <last_update_field/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>496</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Dimencion TURNO</name>
+    <type>CombinationLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <schema/>
+    <table>dim_turno</table>
+    <connection>data_output_DB</connection>
+    <commit>100</commit>
+    <cache_size>9999</cache_size>
+    <replace>Y</replace>
+    <preloadCache>Y</preloadCache>
+    <crc>N</crc>
+    <crcfield>hashcode</crcfield>
+    <fields>
+      <key>
+        <name>turno</name>
+        <lookup>turno</lookup>
+      </key>
+      <return>
+        <name>id_dim_turno</name>
+        <creation_method>tablemax</creation_method>
+        <use_autoinc>N</use_autoinc>
+      </return>
+    </fields>
+    <sequence/>
+    <last_update_field/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>688</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Eliminar y ordenar campos</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_personal</name>
+      </field>
+      <field>
+        <name>nombre_completo</name>
+      </field>
+      <field>
+        <name>pais_origen</name>
+      </field>
+      <field>
+        <name>tipo_personal</name>
+      </field>
+      <field>
+        <name>turno</name>
+      </field>
+      <field>
+        <name>hotel</name>
+        <rename>lugar_sucursal</rename>
+      </field>
+      <field>
+        <name>fecha_contratacion</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>896</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Entrada PERSONAL</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -793,12 +945,12 @@
       <schema_name/>
     </partitioning>
     <connection>data_input_DB</connection>
-    <sql>SELECT a.id_ambiente, count(*) as total_articulos
-	FROM ambiente as a, articulo as ar
-	WHERE a.id_ambiente=ar.id_ambiente
-	group by a.id_ambiente
-	order by a.id_ambiente ASC;
-</sql>
+    <sql>select p.nombre, p.apellido_paterno, p.apellido_materno, pais.nombre pais_origen, tp.nombre as tipo_personal, p.turno, sucursal.lugar as hotel, p.fecha_contratacion
+from tipo_personal as tp, personal as p, pais,  sucursal
+where 
+	p.id_tipo_personal=tp.id_tipo_personal and
+	p.id_hotel=sucursal.id_sucursal and
+	p.id_pais=pais.id_pais;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -813,14 +965,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>96</xloc>
-      <yloc>64</yloc>
+      <xloc>112</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Entrada TOTAL MUEBLES</name>
-    <type>TableInput</type>
+    <name>Selecciona/Renombra valores</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -829,20 +981,37 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>data_input_DB</connection>
-    <sql>
--- muebles
-SELECT a.id_ambiente, count(*) as total_muebles
-	FROM ambiente as a, mueble as mu
-	WHERE a.id_ambiente=mu.id_ambiente
-	group by a.id_ambiente
-	order by a.id_ambiente ASC;
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <fields>
+      <field>
+        <name>id_personal</name>
+        <rename/>
+      </field>
+      <field>
+        <name>id_dim_personal</name>
+        <rename/>
+      </field>
+      <field>
+        <name>fecha_contratacion</name>
+        <rename/>
+      </field>
+      <field>
+        <name>id_dim_turno</name>
+        <rename/>
+      </field>
+      <field>
+        <name>id_dim_tipo_personal</name>
+        <rename/>
+      </field>
+      <field>
+        <name>id_dim_hotel</name>
+        <rename/>
+      </field>
+      <field>
+        <name>id_dim_pais</name>
+        <rename/>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -852,13 +1021,13 @@ SELECT a.id_ambiente, count(*) as total_muebles
       </output>
     </remotesteps>
     <GUI>
-      <xloc>96</xloc>
-      <yloc>208</yloc>
+      <xloc>336</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Hechos HABITACION</name>
+    <name>Tabla Hechos personal</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -870,7 +1039,7 @@ SELECT a.id_ambiente, count(*) as total_muebles
     </partitioning>
     <connection>data_output_DB</connection>
     <schema/>
-    <table>hecho-habitacion</table>
+    <table>hecho_personal</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -887,36 +1056,32 @@ SELECT a.id_ambiente, count(*) as total_muebles
     <return_field/>
     <fields>
       <field>
-        <column_name>id_ambiente</column_name>
-        <stream_name>id_ambiente</stream_name>
+        <column_name>id_personal</column_name>
+        <stream_name>id_personal</stream_name>
       </field>
       <field>
-        <column_name>total_articulos</column_name>
-        <stream_name>total_articulos</stream_name>
+        <column_name>id_dim_personal</column_name>
+        <stream_name>id_dim_personal</stream_name>
       </field>
       <field>
-        <column_name>total_muebles</column_name>
-        <stream_name>total_muebles</stream_name>
+        <column_name>fecha_contratacion</column_name>
+        <stream_name>fecha_contratacion</stream_name>
+      </field>
+      <field>
+        <column_name>id_dim_turno</column_name>
+        <stream_name>id_dim_turno</stream_name>
+      </field>
+      <field>
+        <column_name>id_dim_tipo_personal</column_name>
+        <stream_name>id_dim_tipo_personal</stream_name>
       </field>
       <field>
         <column_name>id_dim_hotel</column_name>
         <stream_name>id_dim_hotel</stream_name>
       </field>
       <field>
-        <column_name>id_dim_estado</column_name>
-        <stream_name>id_dim_estado</stream_name>
-      </field>
-      <field>
-        <column_name>numero de habitacion</column_name>
-        <stream_name>numero de habitacion</stream_name>
-      </field>
-      <field>
-        <column_name>id_dim_tipo_habitacion</column_name>
-        <stream_name>id_dim_tipo_habitacion</stream_name>
-      </field>
-      <field>
-        <column_name>total_activos</column_name>
-        <stream_name>total_activos</stream_name>
+        <column_name>id_dim_pais</column_name>
+        <stream_name>id_dim_pais</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -928,49 +1093,14 @@ SELECT a.id_ambiente, count(*) as total_muebles
       </output>
     </remotesteps>
     <GUI>
-      <xloc>208</xloc>
-      <yloc>368</yloc>
+      <xloc>528</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Multiway merge join</name>
-    <type>MultiwayMergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>INNER</join_type>
-    <step0>Entrada Total Articulos</step0>
-    <step1>Entrada Total Muebles</step1>
-    <step2>entrada HABITACIONES</step2>
-    <number_input>3</number_input>
-    <keys>
-      <key>id_ambiente</key>
-      <key>id_ambiente</key>
-      <key>id_ambiente</key>
-    </keys>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>368</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Seleccion de campos</name>
-    <type>SelectValues</type>
+    <name>cambio de turno</name>
+    <type>ReplaceString</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -981,30 +1111,41 @@ SELECT a.id_ambiente, count(*) as total_muebles
     </partitioning>
     <fields>
       <field>
-        <name>id_ambiente</name>
+        <in_stream_name>turno</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>1</replace_string>
+        <replace_by_string>Mañana</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
       </field>
       <field>
-        <name>total_articulos</name>
+        <in_stream_name>turno</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>2</replace_string>
+        <replace_by_string>Tarde</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
       </field>
       <field>
-        <name>total_muebles</name>
+        <in_stream_name>turno</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>3</replace_string>
+        <replace_by_string>Noche</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
       </field>
-      <field>
-        <name>id_dim_hotel</name>
-      </field>
-      <field>
-        <name>id_dim_estado</name>
-      </field>
-      <field>
-        <name>numero de habitacion</name>
-      </field>
-      <field>
-        <name>id_dim_tipo_habitacion</name>
-      </field>
-      <field>
-        <name>total_activos</name>
-      </field>
-      <select_unspecified>N</select_unspecified>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1015,13 +1156,13 @@ SELECT a.id_ambiente, count(*) as total_muebles
       </output>
     </remotesteps>
     <GUI>
-      <xloc>416</xloc>
-      <yloc>368</yloc>
+      <xloc>240</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Total de ACTIVOS</name>
+    <name>formato fecha</name>
     <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
@@ -1039,17 +1180,17 @@ SELECT a.id_ambiente, count(*) as total_muebles
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>//Script here
 
-var total_activos = parseInt(total_muebles + total_articulos);</jsScript_script>
+var fecha_contratacion=fecha_contratacion.split(' ')[0];</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
       <field>
-        <name>total_activos</name>
-        <rename>total_activos</rename>
-        <type>Number</type>
-        <length>16</length>
-        <precision>2</precision>
-        <replace>N</replace>
+        <name>fecha_contratacion</name>
+        <rename>fecha_contratacion</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
       </field>
     </fields>
     <attributes/>
@@ -1061,14 +1202,14 @@ var total_activos = parseInt(total_muebles + total_articulos);</jsScript_script>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>656</xloc>
-      <yloc>208</yloc>
+      <xloc>336</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>entrada HABITACIONES</name>
-    <type>TableInput</type>
+    <name>limpiar espacios de  nombre completo</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1077,18 +1218,27 @@ var total_activos = parseInt(total_muebles + total_articulos);</jsScript_script>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>data_input_DB</connection>
-    <sql>select a.id_ambiente, s.lugar as lugar_sucursal,a.nombre as "nombre habitacion",
-		a.disponible as estado,h.numero as "numero de habitacion",th.nombre as "tipo habitacion"
-from ambiente as a, sucursal as s,habitacion as h,tipo_habitacion as th
-where  s.id_sucursal = a.id_sucursal and
-		a.id_ambiente = h.id_ambiente and
-		h.id_tipo_habitacion = th.id_tipo_habitacion;</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script here
+
+var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '');</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>nombre_completo</name>
+        <rename>nombre_completo</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1098,8 +1248,195 @@ where  s.id_sucursal = a.id_sucursal and
       </output>
     </remotesteps>
     <GUI>
-      <xloc>96</xloc>
-      <yloc>288</yloc>
+      <xloc>704</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>nombre completo</name>
+    <type>ConcatFields</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator> </separator>
+    <enclosure/>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>N</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>file</name>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>txt</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>nombre</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>40</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>apellido_paterno</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>40</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>apellido_materno</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>40</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <ConcatFields>
+      <targetFieldName>nombre_completo</targetFieldName>
+      <targetFieldLength>0</targetFieldLength>
+      <removeSelectedFields>N</removeSelectedFields>
+    </ConcatFields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>512</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>odenar por hotel</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>hotel</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>432</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>DImencion Personal</name>
+    <type>CombinationLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <schema/>
+    <table>dim_personal</table>
+    <connection>data_output_DB</connection>
+    <commit>100</commit>
+    <cache_size>9999</cache_size>
+    <replace>N</replace>
+    <preloadCache>N</preloadCache>
+    <crc>N</crc>
+    <crcfield>hashcode</crcfield>
+    <fields>
+      <key>
+        <name>nombre_completo</name>
+        <lookup>nombre_completo</lookup>
+      </key>
+      <return>
+        <name>id_dim_personal</name>
+        <creation_method>tablemax</creation_method>
+        <use_autoinc>N</use_autoinc>
+      </return>
+    </fields>
+    <sequence/>
+    <last_update_field/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>176</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
