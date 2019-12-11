@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>6_aseo</name>
+    <name>6_paquete_turisticos</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -427,10 +427,10 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/12/05 12:34:30.719</created_date>
+    <created_date>2019/12/05 13:43:52.244</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/12/05 12:34:30.719</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2019/12/05 13:43:52.244</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -539,58 +539,28 @@
   </connection>
   <order>
     <hop>
-      <from>Entrada Aseo</from>
-      <to>cambio de turno</to>
+      <from>Entrada Tabla</from>
+      <to>Dimencion Paquete</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>cambio de turno</from>
-      <to>odenar por hotel</to>
+      <from>Dimencion Paquete</from>
+      <to>Dimencion Porcentaje</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>odenar por hotel</from>
-      <to>nombre completo</to>
+      <from>Dimencion Porcentaje</from>
+      <to>Selecciona/Renombra valores</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>nombre completo</from>
-      <to>limpiar espacios de  nombre completo</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>limpiar espacios de  nombre completo</from>
-      <to>Añadir secuencia</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Añadir secuencia</from>
-      <to>Dimencion Turno</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dimencion Turno</from>
-      <to>Dimencion personal</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dimencion personal</from>
-      <to>Diemencioin Hotel</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Diemencioin Hotel</from>
-      <to>Escoger campos</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Escoger campos</from>
-      <to>Hechos Aseo</to>
+      <from>Selecciona/Renombra valores</from>
+      <to>Tabla hecho Paquete turistico</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Entrada Aseo</name>
+    <name>Entrada Tabla</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -601,13 +571,13 @@
       <schema_name/>
     </partitioning>
     <connection>data_input_DB</connection>
-    <sql>select p.nombre, p.apellido_paterno, p.apellido_materno, p.turno,a.fecha,am.id_ambiente ,am.nombre, s.lugar as lugar_sucursal  
-from personal as p, aseo_personal as ap, aseo as a, ambiente as am, sucursal as s
-where  p.id_personal = ap.id_personal
-	and a.id_aseo = ap.id_aseo
-	and a.id_ambiente =  am.id_ambiente
-	and am.id_sucursal= s.id_sucursal;
-	</sql>
+    <sql>select pt.nombre as paquete_nombre,pt.descripcion as paquete_descripcion,l.nombre as lugar_nombre,l.descripcion as lugar_descripcion, d.porcentaje as porcentaje_descuento
+from paquete_turistico pt,paquete_turistico_lugar ptl,lugar l, descuento d
+where pt.id_paquete_turistico = ptl.id_paquete_turistico 
+	and ptl.id_lugar = l.id_lugar
+	and pt.id_descuento = d.id_descuento;
+	
+</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -622,297 +592,13 @@ where  p.id_personal = ap.id_personal
       </output>
     </remotesteps>
     <GUI>
-      <xloc>96</xloc>
-      <yloc>96</yloc>
+      <xloc>112</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>cambio de turno</name>
-    <type>ReplaceString</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>turno</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>1</replace_string>
-        <replace_by_string>Mañana</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-        <is_unicode>no</is_unicode>
-      </field>
-      <field>
-        <in_stream_name>turno</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>2</replace_string>
-        <replace_by_string>Tarde</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-        <is_unicode>no</is_unicode>
-      </field>
-      <field>
-        <in_stream_name>turno</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>3</replace_string>
-        <replace_by_string>Noche</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-        <is_unicode>no</is_unicode>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>288</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>odenar por hotel</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>lugar_sucursal</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>448</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>nombre completo</name>
-    <type>ConcatFields</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <separator> </separator>
-    <enclosure/>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>N</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>file</name>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>txt</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>nombre</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>40</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>apellido_paterno</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>40</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>apellido_materno</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>40</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <ConcatFields>
-      <targetFieldName>nombre_completo</targetFieldName>
-      <targetFieldLength>0</targetFieldLength>
-      <removeSelectedFields>N</removeSelectedFields>
-    </ConcatFields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>592</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>limpiar espacios de  nombre completo</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>//Script here
-
-var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '');</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>nombre_completo</name>
-        <rename>nombre_completo</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>Y</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>768</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Añadir secuencia</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <valuename>id_aseo</valuename>
-    <use_database>N</use_database>
-    <connection>data_input_DB</connection>
-    <schema/>
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name/>
-    <start_at>1</start_at>
-    <increment_by>1</increment_by>
-    <max_value>999999999</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>768</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Dimencion Turno</name>
+    <name>Dimencion Paquete</name>
     <type>CombinationLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -923,7 +609,7 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
       <schema_name/>
     </partitioning>
     <schema/>
-    <table>dim_turno</table>
+    <table>dim_paquete</table>
     <connection>data_output_DB</connection>
     <commit>100</commit>
     <cache_size>9999</cache_size>
@@ -933,11 +619,11 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
     <crcfield>hashcode</crcfield>
     <fields>
       <key>
-        <name>turno</name>
-        <lookup>turno</lookup>
+        <name>paquete_nombre</name>
+        <lookup>paquete_nombre</lookup>
       </key>
       <return>
-        <name>id_dim_turno</name>
+        <name>id_dim_paquete</name>
         <creation_method>tablemax</creation_method>
         <use_autoinc>N</use_autoinc>
       </return>
@@ -953,13 +639,13 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>224</yloc>
+      <xloc>304</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Dimencion personal</name>
+    <name>Dimencion Porcentaje</name>
     <type>CombinationLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -970,7 +656,7 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
       <schema_name/>
     </partitioning>
     <schema/>
-    <table>dim_personal</table>
+    <table>dim_porcentaje</table>
     <connection>data_output_DB</connection>
     <commit>100</commit>
     <cache_size>9999</cache_size>
@@ -980,11 +666,11 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
     <crcfield>hashcode</crcfield>
     <fields>
       <key>
-        <name>nombre_completo</name>
-        <lookup>nombre_completo</lookup>
+        <name>porcentaje_descuento</name>
+        <lookup>porcentaje_descuento</lookup>
       </key>
       <return>
-        <name>id_dim_personal</name>
+        <name>id_dim_porcentaje</name>
         <creation_method>tablemax</creation_method>
         <use_autoinc>N</use_autoinc>
       </return>
@@ -1000,60 +686,13 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
       </output>
     </remotesteps>
     <GUI>
-      <xloc>352</xloc>
-      <yloc>224</yloc>
+      <xloc>528</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Diemencioin Hotel</name>
-    <type>CombinationLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <schema/>
-    <table>dim_hotel</table>
-    <connection>data_output_DB</connection>
-    <commit>100</commit>
-    <cache_size>9999</cache_size>
-    <replace>N</replace>
-    <preloadCache>N</preloadCache>
-    <crc>N</crc>
-    <crcfield>hashcode</crcfield>
-    <fields>
-      <key>
-        <name>lugar_sucursal</name>
-        <lookup>lugar_sucursal</lookup>
-      </key>
-      <return>
-        <name>id_dim_hotel</name>
-        <creation_method>tablemax</creation_method>
-        <use_autoinc>N</use_autoinc>
-      </return>
-    </fields>
-    <sequence/>
-    <last_update_field/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>128</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Escoger campos</name>
+    <name>Selecciona/Renombra valores</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -1065,27 +704,23 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
     </partitioning>
     <fields>
       <field>
-        <name>id_aseo</name>
+        <name>paquete_descripcion</name>
         <rename/>
       </field>
       <field>
-        <name>id_ambiente</name>
+        <name>lugar_nombre</name>
         <rename/>
       </field>
       <field>
-        <name>fecha</name>
+        <name>lugar_descripcion</name>
         <rename/>
       </field>
       <field>
-        <name>id_dim_turno</name>
+        <name>id_dim_paquete</name>
         <rename/>
       </field>
       <field>
-        <name>id_dim_personal</name>
-        <rename/>
-      </field>
-      <field>
-        <name>id_dim_hotel</name>
+        <name>id_dim_porcentaje</name>
         <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
@@ -1099,13 +734,13 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
       </output>
     </remotesteps>
     <GUI>
-      <xloc>128</xloc>
-      <yloc>336</yloc>
+      <xloc>528</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Hechos Aseo</name>
+    <name>Tabla hecho Paquete turistico</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1117,7 +752,7 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
     </partitioning>
     <connection>data_output_DB</connection>
     <schema/>
-    <table>hecho-aseo</table>
+    <table>hecho-paquete</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -1134,28 +769,24 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
     <return_field/>
     <fields>
       <field>
-        <column_name>id_aseo</column_name>
-        <stream_name>id_aseo</stream_name>
+        <column_name>paquete_descripcion</column_name>
+        <stream_name>paquete_descripcion</stream_name>
       </field>
       <field>
-        <column_name>id_ambiente</column_name>
-        <stream_name>id_ambiente</stream_name>
+        <column_name>lugar_nombre</column_name>
+        <stream_name>lugar_nombre</stream_name>
       </field>
       <field>
-        <column_name>fecha</column_name>
-        <stream_name>fecha</stream_name>
+        <column_name>lugar_descripcion</column_name>
+        <stream_name>lugar_descripcion</stream_name>
       </field>
       <field>
-        <column_name>id_dim_turno</column_name>
-        <stream_name>id_dim_turno</stream_name>
+        <column_name>id_dim_paquete</column_name>
+        <stream_name>id_dim_paquete</stream_name>
       </field>
       <field>
-        <column_name>id_dim_personal</column_name>
-        <stream_name>id_dim_personal</stream_name>
-      </field>
-      <field>
-        <column_name>id_dim_hotel</column_name>
-        <stream_name>id_dim_hotel</stream_name>
+        <column_name>id_dim_porcentaje</column_name>
+        <stream_name>id_dim_porcentaje</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -1167,8 +798,8 @@ var nombre_completo = nombre_completo.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, 
       </output>
     </remotesteps>
     <GUI>
-      <xloc>352</xloc>
-      <yloc>336</yloc>
+      <xloc>256</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
