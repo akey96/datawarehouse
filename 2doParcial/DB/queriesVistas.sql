@@ -1,7 +1,11 @@
 -- 1ra pregunta
 
 -- 2da pregunta 
-
+select pt.nombre,count(*) as cantidad from hospedaje h, paquete_turistico pt,reserva r
+where h.id_paquete_turistico = pt.id_paquete_turistico AND
+h.id_reserva = r.id_reserva and
+r.fecha >= '2019-01-01' and r.fecha < '2020-01-01'
+group by pt.nombre
 -- 3ra pregunta 
 select s.lugar,sum(p.monto) from sucursal s, ambiente a, reserva r, pago p
 where  
