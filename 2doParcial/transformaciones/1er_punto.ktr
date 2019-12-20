@@ -646,8 +646,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>352</xloc>
-      <yloc>192</yloc>
+      <xloc>336</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -782,8 +782,8 @@ where reservas_2017.nombre = reservas_2018.nombre and
       </output>
     </remotesteps>
     <GUI>
-      <xloc>128</xloc>
-      <yloc>336</yloc>
+      <xloc>96</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -834,8 +834,8 @@ where reservas_2017.nombre = reservas_2018.nombre and
       </output>
     </remotesteps>
     <GUI>
-      <xloc>128</xloc>
-      <yloc>192</yloc>
+      <xloc>96</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -937,7 +937,7 @@ var porcentaje_crecimiento_reserva_2019 = (((reservas2019-reservas2018)/reservas
     </remotesteps>
     <GUI>
       <xloc>592</xloc>
-      <yloc>192</yloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

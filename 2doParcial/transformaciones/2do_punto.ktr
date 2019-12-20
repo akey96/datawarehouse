@@ -673,7 +673,7 @@
       <schema_name/>
     </partitioning>
     <connection>data_input</connection>
-    <sql>select datos_2017.nombre as paquete_turistico, datos_2017.cantidad as demanda_2017, datos_2018.cantidad as demanda_2018, datos_2019.cantidad as demanda_2019
+    <sql>select  datos_2017.nombre as paquete_turistico, datos_2017.cantidad as demanda_2017, datos_2018.cantidad as demanda_2018, datos_2019.cantidad as demanda_2019
 from 
     (select pt.nombre, count(*) as cantidad
         from hospedaje h, paquete_turistico pt, reserva r
@@ -712,8 +712,8 @@ where datos_2017.nombre = datos_2018.nombre
       </output>
     </remotesteps>
     <GUI>
-      <xloc>144</xloc>
-      <yloc>48</yloc>
+      <xloc>96</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
