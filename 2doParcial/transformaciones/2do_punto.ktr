@@ -713,7 +713,7 @@ where datos_2017.nombre = datos_2018.nombre
     </remotesteps>
     <GUI>
       <xloc>96</xloc>
-      <yloc>16</yloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
